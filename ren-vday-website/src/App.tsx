@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useRef, useEffect } from 'react';
+import loveSong from './assets/sound/Malcolm-Todd-Chest-Pain-I-Love.mp3';
 import './App.css'
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   const yesButtonRef = useRef(null);
   const conatinerRef = useRef(null);
   const rootRef = useRef(null);
+  const audio = new Audio(loveSong);
 
   const imgArray = [];
   Object.values(import.meta.glob("./assets/Ren+Ankith_Images/*.jpeg", { eager: true })).forEach(
@@ -31,7 +33,7 @@ function App() {
       }
       
       return () => clearInterval(interval);
-  }, 15000);
+  }, 10000);
 
   }, [index])
 
@@ -40,7 +42,6 @@ function App() {
   }
 
 
-  const noButton = document.querySelector('btn-no');
   const handleMouseOver = () => {
     if(noButtonRef.current && conatinerRef.current){
       const containerHeight = 900;
@@ -73,7 +74,7 @@ function App() {
       rootRef.current.children[0].classList.add("hide");
       conatinerRef.current.children[1].classList.remove("hide");
       rootRef.current.children[1].classList.remove("hide");
-
+      audio.play();
     }
   }
 
