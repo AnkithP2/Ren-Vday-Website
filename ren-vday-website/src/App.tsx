@@ -7,9 +7,10 @@ function App() {
   const noButtonRef = useRef(null);
   const yesButtonRef = useRef(null);
   const conatinerRef = useRef(null);
+  const rootRef = useRef(null);
 
   const imgArray = [];
-  Object.values(import.meta.glob("./assets/*.png", { eager: true })).forEach(
+  Object.values(import.meta.glob("./assets/Ren+Ankith_Images/*.jpeg", { eager: true })).forEach(
     ({ default: path }) => {
       const url = new URL(path, import.meta.url);
       const data = {
@@ -19,20 +20,20 @@ function App() {
     }
   );
 
-  // useEffect(() => {
-  //     const interval = setInterval(() => {
+  useEffect(() => {
+      const interval = setInterval(() => {
 
-  //     if(index+1 >= imgArray.length){
-  //       setIndex(0);
-  //     }
-  //     else{
-  //       setIndex(index + 1);
-  //     }
+      if(index+1 >= imgArray.length){
+        setIndex(0);
+      }
+      else{
+        setIndex(index + 1);
+      }
       
-  //     return () => clearInterval(interval);
-  // }, 5000);
+      return () => clearInterval(interval);
+  }, 15000);
 
-  // }, [index])
+  }, [index])
 
   const getRandomNumber = (min : number, max : number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -65,19 +66,23 @@ function App() {
   }
 
   const handleYesClick = () => {
-    if(yesButtonRef.current && noButtonRef.current && conatinerRef.current){
+    if(yesButtonRef.current && noButtonRef.current && conatinerRef.current && rootRef.current){
       noButtonRef.current.classList.add("hide");
+      yesButtonRef.current.classList.add("hide");
       conatinerRef.current.children[0].classList.add("hide");
+      rootRef.current.children[0].classList.add("hide");
       conatinerRef.current.children[1].classList.remove("hide");
+      rootRef.current.children[1].classList.remove("hide");
+
     }
   }
 
   return (
-    <div className="App">
+    <div className="App" ref = {rootRef}>
       <img src = "src/assets/be-mine-2.png" alt='valentine?' className = 'question'/>
-      <img src = {imgArray[index].path} alt='rotating picture' />
+      <img src = {imgArray[index].path} alt='rotating picture' className='rotate hide'/>
       <div className='container' id='container' ref = {conatinerRef}>
-        <img src='src/assets/erm-fingers.gif' alt='please' className='erm'/>
+        <img src='src/assets/erm-fingers.gif' alt='please' className='erm '/>
         <img src='src/assets/oh-yay.gif' alt='yes' className='celebrate hide'/>
         <button className='btn btn-yes' ref = {yesButtonRef} onClick={handleYesClick}>Yes</button>
         <button className='btn btn-no' ref={noButtonRef} onMouseOver={handleMouseOver}>No</button>
